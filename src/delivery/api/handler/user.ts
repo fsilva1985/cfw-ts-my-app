@@ -6,9 +6,9 @@ export class UserHandler {
     router.add('GET', '/users', this.getUsers);
   }
 
-  public getUsers = async (req: any, res: any) => {
+  getUsers = async (req: any, res: any) => {
     const results = await db.init().execute('SELECT * FROM user')
-    res.end(JSON.stringify(results.rows[0]));
+    res.end(JSON.stringify(results.rows));
   };
 }
 
