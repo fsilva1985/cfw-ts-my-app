@@ -1,12 +1,14 @@
 import { Router } from 'worktop';
+import db from 'driver/database'
 
 export class UserHandler {
   constructor(router: Router) {
     router.add('GET', '/users', this.getUsers);
   }
 
-  public getUsers = (req:any, res:any) => {
-    res.end('OK');
+  public getUsers = async (req: any, res: any) => {
+    const results = await db.init().execute('SELECT * FROM user')
+    res.end(JSON.stringify(results.rows[0]));
   };
 }
 
