@@ -1,19 +1,26 @@
 import { Router } from 'worktop';
-import db from 'driver/database'
+import  { init as InitDatabase } from "driver/database/planetscale";
+import { Connection } from '@planetscale/database'
 
 export class UserHandler {
-  constructor(router: Router) {
+  private connection: Connection
+
+  constructor(router: Router, connection: Connection) {
+    this.connection = connection
+
     router.add('GET', '/users', this.getUsers);
   }
 
   getUsers = async (req: any, res: any) => {
-    const results = await db.init().execute('SELECT * FROM user')
+    const results = await this.connection.execute('SELECT * FROM user')
     res.end(JSON.stringify(results.rows));
   };
 }
 
 export const init = (router: Router) => {
-  return new UserHandler(router);
+  const connection = InitDatabase();
+
+  return new UserHandler(router, connection);
 }
 
 export default init;

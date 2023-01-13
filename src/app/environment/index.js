@@ -1,5 +1,5 @@
 export const env = {
-    DATABASE_URL: DATABASE_CONNECTION,
+    PLANETSCALE_URL: PLANETSCALE_URL,
 };
 
 export default env
