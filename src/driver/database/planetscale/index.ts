@@ -1,20 +1,20 @@
 import { connect, Connection } from '@planetscale/database'
 import env from 'app/environment'
 
-let connection: Connection;
+let connection: Connection
 
 export const initialize = async () => {
-    connection = connect({
-        url: env.PLANETSCALE_URL
-    })
+  connection = connect({
+    url: env.PLANETSCALE_URL
+  })
 
-    return connection;
-};
+  return connection
+}
 
 export const init = (): Connection => {
-    if (!connection) {
-        throw new Error("unable connection");
-    }
+  if (!connection) {
+    throw new Error("unable connection")
+  }
 
-    return connection;
-};
+  return connection
+}

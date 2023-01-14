@@ -1,13 +1,13 @@
 import api from 'delivery/api'
 
-import * as Cache from 'worktop/cache';
+import * as Cache from 'worktop/cache'
 
-import { initialize } from "driver/database/planetscale";
+import { initialize } from "driver/database/planetscale"
 
-const main = async () => {
-    initialize()
+const main = () => {
+  initialize()
 
-    Cache.listen(api.init().run)
+  Cache.listen(api.init().run)
 }
 
 main()
