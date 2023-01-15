@@ -3,7 +3,7 @@ import { init as InitDatabase } from "../driver/database/planetscale"
 import { User } from '../domain/entity/user'
 
 export interface UserRepositoryInterface {
-  getAll(): Promise<User[]>;
+  getAll(): Promise<User[]>
 }
 
 export class UserRepository implements UserRepositoryInterface {
@@ -18,7 +18,7 @@ export class UserRepository implements UserRepositoryInterface {
 
     return results.rows.map((row) => {
       return row as User
-    });
+    })
   }
 }
 

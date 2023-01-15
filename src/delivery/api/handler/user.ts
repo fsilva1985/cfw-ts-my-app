@@ -1,5 +1,5 @@
 import { Router } from 'worktop'
-import { UserUsecaseInterface, init as InitUserUsecase } from '../../../usecase/user';
+import { UserUsecaseInterface, init as InitUserUsecase } from '../../../usecase/user'
 
 export class UserHandler {
   private userUsecase: UserUsecaseInterface

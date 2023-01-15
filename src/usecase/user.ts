@@ -2,7 +2,7 @@ import { UserRepositoryInterface, init as InitRepository } from "../repository/u
 import { User } from '../domain/entity/user'
 
 export interface UserUsecaseInterface {
-  getAll(): Promise<User[]>;
+  getAll(): Promise<User[]>
 }
 
 export class UserUsecase implements UserUsecaseInterface {
