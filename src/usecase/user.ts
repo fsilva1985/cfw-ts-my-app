@@ -1,5 +1,5 @@
-import { UserRepository, init as InitRepository } from "repository/planetscale/user"
-import { User } from 'domain/entity/user'
+import { UserRepository, init as InitRepository } from "../repository/planetscale/user"
+import { User } from '../domain/entity/user'
 
 export class UserUsecase {
   private userRepository: UserRepository

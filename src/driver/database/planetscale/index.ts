@@ -1,5 +1,5 @@
 import { connect, Connection } from '@planetscale/database'
-import env from 'app/environment'
+import env from '../../../app/environment'
 
 let connection: Connection
 

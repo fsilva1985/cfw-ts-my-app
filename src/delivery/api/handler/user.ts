@@ -1,10 +1,10 @@
 import { Router } from 'worktop'
-import { UserUsecase, init as InitUserUsecase } from 'usecase/user';
+import { UserUsecase, init as InitUserUsecase } from '../../../usecase/user';
 
 export class UserHandler {
   private userUsecase: UserUsecase
 
-  constructor(router: Router, userUsecase: UserUsecase) {
+  constructor(router: Router, userUsecase: any) {
     this.userUsecase = userUsecase
     router.add('GET', '/users', this.getUsers)
   }

@@ -1,8 +1,8 @@
-import api from 'delivery/api'
+import api from '../delivery/api'
 
 import * as Cache from 'worktop/cache'
 
-import { initialize } from "driver/database/planetscale"
+import { initialize } from "../driver/database/planetscale"
 
 const main = () => {
   initialize()

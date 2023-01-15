@@ -1,6 +1,6 @@
 import { Router } from 'worktop'
 
-import UserHandler from 'delivery/api/handler/user'
+import UserHandler from './handler/user'
 
 const init = (): Router => {
   const router = new Router()

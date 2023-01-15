@@ -1,6 +1,6 @@
 import { Connection } from '@planetscale/database'
-import { init as InitDatabase } from "driver/database/planetscale"
-import { User } from 'domain/entity/user'
+import { init as InitDatabase } from "../../driver/database/planetscale"
+import { User } from '../../domain/entity/user'
 
 export class UserRepository {
   private connection: Connection
