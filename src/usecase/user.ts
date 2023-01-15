@@ -1,15 +1,19 @@
-import { UserRepository, init as InitRepository } from "../repository/planetscale/user"
+import { UserRepositoryInterface, init as InitRepository } from "../repository/user"
 import { User } from '../domain/entity/user'
 
-export class UserUsecase {
-  private userRepository: UserRepository
+export interface UserUsecaseInterface {
+  getAll(): Promise<User[]>;
+}
 
-  constructor(userRepository: UserRepository) {
+export class UserUsecase implements UserUsecaseInterface {
+  private userRepository: UserRepositoryInterface
+
+  constructor(userRepository: UserRepositoryInterface) {
     this.userRepository = userRepository
   }
 
-  async getUsers(): Promise<User[]> {
-    return await this.userRepository.all()
+  async getAll(): Promise<User[]> {
+    return await this.userRepository.getAll()
   }
 }
 
