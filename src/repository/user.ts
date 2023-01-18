@@ -3,6 +3,7 @@ import { init as InitDatabase } from "../driver/database/planetscale"
 import { User } from '../domain/entity/user'
 
 export interface UserRepositoryInterface {
+  getById(userId: number): Promise<User>
   getAll(): Promise<User[]>
   create(user: User): Promise<User>
   update(user: User): Promise<User>
@@ -13,6 +14,12 @@ export class UserRepository implements UserRepositoryInterface {
 
   constructor(connection: Connection) {
     this.connection = connection
+  }
+
+  async getById(userId: number): Promise<User> {
+    const results = await this.connection.execute('SELECT * FROM users WHERE id = :id', {id: userId})
+
+    return results.rows[0] as User
   }
 
   async getAll(): Promise<User[]> {
