@@ -3,6 +3,8 @@ import { User } from '../domain/entity/user'
 
 export interface UserUsecaseInterface {
   getAll(): Promise<User[]>
+  create(user: User): Promise<User>
+  update(user: User): Promise<User>
 }
 
 export class UserUsecase implements UserUsecaseInterface {
@@ -14,6 +16,14 @@ export class UserUsecase implements UserUsecaseInterface {
 
   async getAll(): Promise<User[]> {
     return await this.userRepository.getAll()
+  }
+
+  async create(user: User): Promise<User> {
+    return await this.userRepository.create(user)
+  }
+
+  async update(user: User): Promise<User> {
+    return await this.userRepository.update(user)
   }
 }
 
