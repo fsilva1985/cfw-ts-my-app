@@ -33,7 +33,7 @@ export class UserRepository implements UserRepositoryInterface {
 
   async update(user: User): Promise<User> {
     const query = "UPDATE users SET `firstName` = :firstName, `lastName` = :lastName, `age` = :age WHERE `id` = :id"
-    this.connection.execute(query, user)
+    await this.connection.execute(query, user)
 
     return user
   }
