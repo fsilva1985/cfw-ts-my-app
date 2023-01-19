@@ -6,7 +6,6 @@ export interface UserUsecaseInterface {
   getAll(): Promise<User[]>
   create(user: User): Promise<User>
   update(user: User): Promise<User>
-  checkUserById(userId: number): Promise<boolean>
 }
 
 export class UserUsecase implements UserUsecaseInterface {
@@ -30,16 +29,6 @@ export class UserUsecase implements UserUsecaseInterface {
 
   async update(user: User): Promise<User> {
     return await this.userRepository.update(user)
-  }
-
-  async checkUserById(userId: number): Promise<boolean> {
-    const response = await this.getById(userId)
-
-    if (response.id === 0) {
-      return false
-    }
-
-    return true
   }
 }
 

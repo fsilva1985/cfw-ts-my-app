@@ -6,27 +6,36 @@ export class UserHandler {
 
   constructor(router: Router, userUsecase: UserUsecaseInterface) {
     this.userUsecase = userUsecase
-    router.add('GET', '/users', this.getUsers)
-    router.add('POST', '/users', this.createUser)
-    router.add('PUT', '/users', this.updateUser)
+    router.add('GET', '/users/:id', this.getUserById)
+    router.add('GET', '/users', this.getAll)
+    router.add('POST', '/users', this.create)
+    router.add('PUT', '/users', this.update)
   }
 
-  getUsers = async (req: any, res: any) => {
+  getUserById = async (req: any, res: any) => {
+    const id = Number(req.params.id)
+
+    const result = await this.userUsecase.getById(id)
+
+    res.send(200, result)
+  }
+  
+  getAll = async (req: any, res: any) => {
     const results = await this.userUsecase.getAll()
 
     res.send(200, results)
   }
 
-  createUser = async (req: any, res: any) => {
-    var input = await req.body();
+  create = async (req: any, res: any) => {
+    var input = await req.body()
 
     await this.userUsecase.create(input)
 
     res.send(201)
   }
 
-  updateUser = async (req: any, res: any) => {
-    var input = await req.body();
+  update = async (req: any, res: any) => {
+    var input = await req.body()
 
     await this.userUsecase.update(input)
 
