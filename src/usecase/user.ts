@@ -1,11 +1,12 @@
-import { UserRepositoryInterface, init as InitRepository } from "../repository/user"
+import { UserRepositoryInterface, init as InitRepository } from '../repository/user'
 import { User } from '../domain/entity/user'
 
 export interface UserUsecaseInterface {
   getById(userId: number): Promise<User>
   getAll(): Promise<User[]>
   create(user: User): Promise<User>
-  update(user: User): Promise<User>
+  update(user: User): Promise<any>
+  delete(userId: number): Promise<any>
 }
 
 export class UserUsecase implements UserUsecaseInterface {
@@ -27,8 +28,12 @@ export class UserUsecase implements UserUsecaseInterface {
     return await this.userRepository.create(user)
   }
 
-  async update(user: User): Promise<User> {
-    return await this.userRepository.update(user)
+  async update(user: User): Promise<any> {
+    await this.userRepository.update(user)
+  }
+
+  async delete(userId: number): Promise<any> {
+    await this.userRepository.delete(userId)
   }
 }
 

@@ -42,3 +42,13 @@ test('Should return status response usign update()', async () => {
 
   expect(response.status).toBe(204)
 })
+
+test('Should return status response usign delete()', async () => {
+  const router = new Router()
+  const usecase = mock<UserUsecaseInterface>()
+  new UserHandler(router, usecase)
+  const event = new FetchEvent('fetch', { request: new Request('http://localhost/users/1', { method: 'DELETE' }) })
+  const response = await router.run(event)
+
+  expect(response.status).toBe(204)
+})

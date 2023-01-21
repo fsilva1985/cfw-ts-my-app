@@ -11,8 +11,11 @@
   },
   "testRegex": ".*\\.test\\.ts$",
   "testEnvironment": "miniflare",
+  "coverageReporters": [
+    "html"
+  ],
   "collectCoverageFrom": [
-    "src/**/*.{ts,tsx}"
+    "src/**/*.ts"
   ],
   "testEnvironmentOptions": {
     "bindings": {

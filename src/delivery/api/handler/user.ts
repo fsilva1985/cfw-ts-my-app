@@ -10,6 +10,7 @@ export class UserHandler {
     router.add('GET', '/users', this.getAll)
     router.add('POST', '/users', this.create)
     router.add('PUT', '/users', this.update)
+    router.add('DELETE', '/users/:id', this.delete)
   }
 
   getUserById = async (req: any, res: any) => {
@@ -19,7 +20,7 @@ export class UserHandler {
 
     res.send(200, result)
   }
-  
+
   getAll = async (req: any, res: any) => {
     const results = await this.userUsecase.getAll()
 
@@ -35,9 +36,21 @@ export class UserHandler {
   }
 
   update = async (req: any, res: any) => {
-    var input = await req.body()
+    try {
+      var input = await req.body()
 
-    await this.userUsecase.update(input)
+      await this.userUsecase.update(input)
+
+      res.send(204)
+    } catch (err: any) {
+      return res.send(500, err.stack);
+    }
+  }
+
+  delete = async (req: any, res: any) => {
+    const id = Number(req.params.id)
+
+    await this.userUsecase.getById(id)
 
     res.send(204)
   }

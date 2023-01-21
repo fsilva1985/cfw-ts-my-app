@@ -1,12 +1,13 @@
 import { Connection } from '@planetscale/database'
-import { init as InitDatabase } from "../driver/database/planetscale"
+import { init as InitDatabase } from '../driver/database/planetscale'
 import { User } from '../domain/entity/user'
 
 export interface UserRepositoryInterface {
   getById(userId: number): Promise<User>
   getAll(): Promise<User[]>
   create(user: User): Promise<User>
-  update(user: User): Promise<User>
+  update(user: User): Promise<any>
+  delete(userId: number): Promise<any>
 }
 
 export class UserRepository implements UserRepositoryInterface {
@@ -17,7 +18,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async getById(userId: number): Promise<User> {
-    const results = await this.connection.execute('SELECT * FROM users WHERE id = :id', {id: userId})
+    const results = await this.connection.execute('SELECT * FROM users WHERE id = :id', { id: userId })
 
     return results.rows[0] as User
   }
@@ -31,18 +32,18 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async create(user: User): Promise<User> {
-    const query = "INSERT INTO users (`firstName`, `lastName`, `age`) VALUES (:firstName, :lastName, :age)"
-    const results = await this.connection.execute(query, user)
+    const results = await this.connection.execute('INSERT INTO users (`firstName`, `lastName`, `age`) VALUES (:firstName, :lastName, :age)', user)
     user.id = Number(results.insertId)
 
     return user
   }
 
-  async update(user: User): Promise<User> {
-    const query = "UPDATE users SET `firstName` = :firstName, `lastName` = :lastName, `age` = :age WHERE `id` = :id"
-    await this.connection.execute(query, user)
+  async update(user: User) {
+    await this.connection.execute('UPDAT users SET `firstName` = :firstName, `lastName` = :lastName, `age` = :age WHERE `id` = :id', user)
+  }
 
-    return user
+  async delete(userId: number): Promise<any> {
+    await this.connection.execute('DELETE FROM users WHERE id = :id', { id: userId })
   }
 }
 

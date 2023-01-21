@@ -13,7 +13,7 @@ export const initialize = async () => {
 
 export const init = (): Connection => {
   if (!connection) {
-    throw new Error("unable connection")
+    throw new Error('unable connection')
   }
 
   return connection
