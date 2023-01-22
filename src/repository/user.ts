@@ -39,7 +39,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async update(user: User) {
-    await this.connection.execute('UPDAT users SET `firstName` = :firstName, `lastName` = :lastName, `age` = :age WHERE `id` = :id', user)
+    await this.connection.execute('UPDATE users SET `firstName` = :firstName, `lastName` = :lastName, `age` = :age WHERE `id` = :id', user)
   }
 
   async delete(userId: number): Promise<any> {

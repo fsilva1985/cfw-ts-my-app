@@ -42,8 +42,10 @@ export class UserHandler {
       await this.userUsecase.update(input)
 
       res.send(204)
-    } catch (err: any) {
-      return res.send(500, err.stack);
+    } catch (err) {
+      console.log(err)
+
+      res.send(500)
     }
   }
 
