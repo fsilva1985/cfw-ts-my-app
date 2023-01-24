@@ -14,25 +14,43 @@ export class UserHandler {
   }
 
   getUserById = async (req: any, res: any) => {
-    const id = Number(req.params.id)
+    try {
+      const id = Number(req.params.id)
 
-    const result = await this.userUsecase.getById(id)
+      const result = await this.userUsecase.getById(id)
 
-    res.send(200, result)
+      res.send(200, result)
+    } catch (err) {
+      console.log(err)
+
+      res.send(500)
+    }
   }
 
   getAll = async (req: any, res: any) => {
-    const results = await this.userUsecase.getAll()
+    try {
+      const results = await this.userUsecase.getAll()
 
-    res.send(200, results)
+      res.send(200, results)
+    } catch (err) {
+      console.log(err)
+
+      res.send(500)
+    }
   }
 
   create = async (req: any, res: any) => {
-    var input = await req.body()
+    try {
+      var input = await req.body()
 
-    await this.userUsecase.create(input)
+      await this.userUsecase.create(input)
 
-    res.send(201)
+      res.send(201)
+    } catch (err) {
+      console.log(err)
+
+      res.send(500)
+    }
   }
 
   update = async (req: any, res: any) => {
@@ -50,11 +68,17 @@ export class UserHandler {
   }
 
   delete = async (req: any, res: any) => {
-    const id = Number(req.params.id)
+    try {
+      const id = Number(req.params.id)
 
-    await this.userUsecase.getById(id)
+      await this.userUsecase.getById(id)
 
-    res.send(204)
+      res.send(204)
+    } catch (err) {
+      console.log(err)
+
+      res.send(500)
+    }
   }
 }
 
