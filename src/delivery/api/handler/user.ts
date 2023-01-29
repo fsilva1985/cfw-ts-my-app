@@ -1,5 +1,8 @@
 import { Router } from 'worktop'
+import { ServerRequest as Request } from 'worktop/request';
+import { ServerResponse as Response } from 'worktop/response';
 import { UserUsecaseInterface, init as InitUserUsecase } from '../../../usecase/user'
+import { User, schema } from '../../../domain/entity/user'
 
 export class UserHandler {
   private userUsecase: UserUsecaseInterface
@@ -13,71 +16,73 @@ export class UserHandler {
     router.add('DELETE', '/users/:id', this.delete)
   }
 
-  getUserById = async (req: any, res: any) => {
+  getUserById = async (req: Request, res: Response) => {
     try {
       const id = Number(req.params.id)
 
       const result = await this.userUsecase.getById(id)
 
       res.send(200, result)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
 
-      res.send(500)
+      res.send(500, err)
     }
   }
 
-  getAll = async (req: any, res: any) => {
+  getAll = async (req: Request, res: Response) => {
     try {
       const results = await this.userUsecase.getAll()
 
       res.send(200, results)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
 
-      res.send(500)
+      res.send(500, err)
     }
   }
 
-  create = async (req: any, res: any) => {
+  create = async (req: Request, res: Response) => {
     try {
-      var input = await req.body()
+      const payload = await req.body()
+      const user = schema.omit({ id: true }).parse(payload) as User;
 
-      await this.userUsecase.create(input)
+      await this.userUsecase.create(user)
 
       res.send(201)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
 
-      res.send(500)
+      res.send(500, err)
     }
   }
 
-  update = async (req: any, res: any) => {
+  update = async (req: Request, res: Response) => {
     try {
-      var input = await req.body()
+      const payload = await req.body()
+      const user = schema.parse(payload) as User;
 
-      await this.userUsecase.update(input)
+      await this.userUsecase.update(user)
 
       res.send(204)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
-
-      res.send(500)
+      
+      res.send(500, err)
     }
   }
 
-  delete = async (req: any, res: any) => {
+  delete = async (req: Request, res: Response) => {
     try {
       const id = Number(req.params.id)
 
       await this.userUsecase.getById(id)
 
       res.send(204)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
 
-      res.send(500)
+      res.send(500, err)
     }
   }
 }
