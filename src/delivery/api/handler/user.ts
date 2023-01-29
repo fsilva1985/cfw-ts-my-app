@@ -1,6 +1,6 @@
 import { Router } from 'worktop'
-import { ServerRequest as Request } from 'worktop/request';
-import { ServerResponse as Response } from 'worktop/response';
+import { ServerRequest as Request } from 'worktop/request'
+import { ServerResponse as Response } from 'worktop/response'
 import { UserUsecaseInterface, init as InitUserUsecase } from '../../../usecase/user'
 import { User, schema } from '../../../domain/entity/user'
 
@@ -45,7 +45,7 @@ export class UserHandler {
   create = async (req: Request, res: Response) => {
     try {
       const payload = await req.body()
-      const user = schema.omit({ id: true }).parse(payload) as User;
+      const user = schema.omit({ id: true }).parse(payload) as User
 
       await this.userUsecase.create(user)
 
@@ -60,7 +60,7 @@ export class UserHandler {
   update = async (req: Request, res: Response) => {
     try {
       const payload = await req.body()
-      const user = schema.parse(payload) as User;
+      const user = schema.parse(payload) as User
 
       await this.userUsecase.update(user)
 
