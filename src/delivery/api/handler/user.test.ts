@@ -3,10 +3,10 @@ import { UserHandler } from './user'
 import { UserUsecaseInterface } from '../../../usecase/user'
 import { mock } from 'jest-mock-extended'
 
-describe("should test userHandler method getById", () => {
+describe("should test userHandler", () => {
   const items = [
     {
-      description: "should test ok",
+      description: "should test method getById",
       usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
       url: 'http://localhost/users/1',
       method: 'GET',
@@ -14,7 +14,7 @@ describe("should test userHandler method getById", () => {
       expected: 200
     },
     {
-      description: "should test usecase error",
+      description: "should test method getById Exception",
       usecase: (): any => mock<UserUsecaseInterface>().getById.mockImplementationOnce(() => {
         throw new Error();
       }),
@@ -23,32 +23,8 @@ describe("should test userHandler method getById", () => {
       body: null,
       expected: 500
     },
-  ]
-
-  items.forEach((item) => {
-    it(`test ${item.description}`, async () => {
-      const router = new Router()
-      new UserHandler(router, item.usecase())
-
-      const event = new FetchEvent('fetch', {
-        request: new Request(
-          item.url,
-          {
-            method: item.method
-          }
-        )
-      })
-      const response = await router.run(event)
-
-      expect(response.status).toBe(item.expected)
-    })
-  })
-})
-
-describe("should test userHandler method getAll", () => {
-  const items = [
     {
-      description: "should test ok",
+      description: "should test method getAll",
       usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
       url: 'http://localhost/users',
       method: 'GET',
@@ -56,7 +32,7 @@ describe("should test userHandler method getAll", () => {
       expected: 200
     },
     {
-      description: "should test usecase error",
+      description: "should test method getAll Exception",
       usecase: (): any => mock<UserUsecaseInterface>().getById.mockImplementationOnce(() => {
         throw new Error();
       }),
@@ -65,54 +41,20 @@ describe("should test userHandler method getAll", () => {
       body: null,
       expected: 500
     },
-  ]
-
-  items.forEach((item) => {
-    it(`test ${item.description}`, async () => {
-      const router = new Router()
-      new UserHandler(router, item.usecase())
-
-      const event = new FetchEvent('fetch', {
-        request: new Request(
-          item.url,
-          {
-            method: item.method
-          }
-        )
-      })
-      const response = await router.run(event)
-
-      expect(response.status).toBe(item.expected)
-    })
-  })
-})
-
-describe("should test userHandler method create", () => {
-  const items = [
     {
-      description: "should test ok",
+      description: "should test method create",
       usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
       url: 'http://localhost/users',
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         "firstName": "felipe",
         "lastName": "silva",
         "age": 37
-      },
+      }),
       expected: 201
     },
     {
-      description: "should test method error payload validation",
-      usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
-      url: 'http://localhost/users',
-      method: 'POST',
-      body: {
-        "firstName": 10
-      },
-      expected: 500
-    },
-    {
-      description: "should test method error usecase",
+      description: "should test method create Exception",
       usecase: (): any => mock<UserUsecaseInterface>().getById.mockImplementationOnce(() => {
         throw new Error();
       }),
@@ -121,64 +63,44 @@ describe("should test userHandler method create", () => {
       body: null,
       expected: 500
     },
-  ]
-
-  items.forEach((item) => {
-    it(`test ${item.description}`, async () => {
-      const router = new Router()
-      new UserHandler(router, item.usecase())
-
-      const event = new FetchEvent('fetch', {
-        request: new Request(
-          item.url,
-          {
-            method: item.method,
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item.body)
-          }
-        )
-      })
-      const response = await router.run(event)
-
-      expect(response.status).toBe(item.expected)
-    })
-  })
-})
-
-describe("should test userHandler method update", () => {
-  const items = [
     {
-      description: "should test ok",
+      description: "should test method update",
       usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
       url: 'http://localhost/users',
       method: 'PUT',
-      body: {
+      body: JSON.stringify({
         "id": 1,
         "firstName": "felipe",
         "lastName": "silva",
         "age": 37
-      },
+      }),
       expected: 204
     },
     {
-      description: "should test method error payload validation",
-      usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
-      url: 'http://localhost/users',
-      method: 'PUT',
-      body: {
-        "firstName": 10
-      },
-      expected: 500
-    },
-    {
-      description: "should test method error usecase",
+      description: "should test method update Exception",
       usecase: (): any => mock<UserUsecaseInterface>().getById.mockImplementationOnce(() => {
         throw new Error();
       }),
       url: 'http://localhost/users',
       method: 'PUT',
+      body: null,
+      expected: 500
+    },
+    {
+      description: "should test method delete",
+      usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
+      url: 'http://localhost/users/1',
+      method: 'DELETE',
+      body: null,
+      expected: 204
+    },
+    {
+      description: "should test method delete Exception",
+      usecase: (): any => mock<UserUsecaseInterface>().getById.mockImplementationOnce(() => {
+        throw new Error();
+      }),
+      url: 'http://localhost/users/1',
+      method: 'DELETE',
       body: null,
       expected: 500
     },
@@ -197,49 +119,7 @@ describe("should test userHandler method update", () => {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(item.body)
-          }
-        )
-      })
-      const response = await router.run(event)
-
-      expect(response.status).toBe(item.expected)
-    })
-  })
-})
-
-describe("should test userHandler method delete", () => {
-  const items = [
-    {
-      description: "should test ok",
-      usecase: (): UserUsecaseInterface => mock<UserUsecaseInterface>(),
-      url: 'http://localhost/users/1',
-      method: 'DELETE',
-      body: null,
-      expected: 204
-    },
-    {
-      description: "should test usecase error",
-      usecase: (): any => mock<UserUsecaseInterface>().getById.mockImplementationOnce(() => {
-        throw new Error();
-      }),
-      url: 'http://localhost/users/1',
-      method: 'DELETE',
-      body: null,
-      expected: 500
-    },
-  ]
-
-  items.forEach((item) => {
-    it(`test ${item.description}`, async () => {
-      const router = new Router()
-      new UserHandler(router, item.usecase())
-
-      const event = new FetchEvent('fetch', {
-        request: new Request(
-          item.url,
-          {
-            method: item.method
+            body: item.body
           }
         )
       })
